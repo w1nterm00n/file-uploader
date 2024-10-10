@@ -3,6 +3,7 @@ const app = express();
 const router = require("./routes/router");
 const path = require("path");
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
 
 //задаю шаблонизатор ejs
 app.set("view engine", "ejs");
@@ -23,13 +24,6 @@ const prisma = new PrismaClient();
 async function main() {
 	const allUsers = await prisma.user.findMany();
 	console.log("all users:", allUsers);
-
-	// const user = await prisma.user.create({
-	//     data: {
-	//       email: 'elsa@prisma.io',
-	//       name: 'Elsa Prisma',
-	//     },
-	// })
 }
 
 main()
