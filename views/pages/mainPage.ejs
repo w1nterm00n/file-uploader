@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+<body>
+
+    <div class="page mainPage">
+        <div class="main-container">
+            <div class="left-panel">
+                <div class="welcome-block">
+                    <p class="welcomeUser">welcome, username!</p>
+                    <p class="storageStats">Storage used: 3 Mb</p>
+                </div>
+                <p class="foldersAmount">amount of folders: 3</p>
+                <div class="folders-array">
+                    <a href="#" class="folder-link">Default Folder</a>
+                    <a href="#" class="folder-link">Default Folder</a>
+                </div>
+                <button class="btn-default"> <a href="#"> Add new folder </a> </button>
+                <a href="#" class="shadow_text logOutBtn">Log out</a>
+            </div>
+
+
+            <div class="right-panel">
+
+                <%- include('fileLayout') %>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
