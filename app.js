@@ -6,7 +6,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //задаю шаблонизатор ejs
 app.set("view engine", "ejs");
-app.set("views", __dirname + "/views");
+app.set("views", __dirname + "/views/pages");
 //
 
 //  обработка корневого маршрута (чтобы не было ошибки Cannot GET /)
