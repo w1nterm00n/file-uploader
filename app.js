@@ -8,7 +8,9 @@ app.use(express.urlencoded({ extended: true }));
 const session = require("express-session"); //
 const passport = require("passport"); //
 const LocalStrategy = require("passport-local").Strategy; //
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client"); //
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store"); //
+
 const prisma = new PrismaClient();
 
 //задаю шаблонизатор ejs
@@ -17,7 +19,26 @@ app.set("views", __dirname + "/views/pages");
 //
 
 //всё, что касается аутентификации
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false })); //
+app.use(
+	session(
+		{
+			secret: "cats",
+			resave: false,
+			saveUninitialized: true,
+			store: new PrismaSessionStore(prisma, {
+				checkPeriod: 2 * 60 * 1000,
+				//dbRecordIdIsSessionId: true,
+			}),
+		},
+		(err) => {
+			if (err) {
+				console.error("Session save error: ", err);
+			}
+		}
+	)
+);
+
+app.use(passport.initialize()); //
 app.use(passport.session()); //
 app.use(flash());
 
