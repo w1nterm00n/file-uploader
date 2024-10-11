@@ -16,7 +16,7 @@ model User {
 
 model Folder {
   id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(255)
+  name     String @unique @db.VarChar(255)
   author   User   @relation(fields: [authorId], references: [id])
   authorId Int
   files    File[]

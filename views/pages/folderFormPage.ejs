@@ -11,15 +11,10 @@
                 <div class="welcome-block">
                     <p class="welcomeUser">welcome, <%= user.nickname %></p>
                 </div>
-                <p class="foldersAmount">amount of folders: <%= folders.length %></p>
+                <p class="foldersAmount">amount of folders: 3</p>
                 <div class="folders-array">
-                    <% if (!folders) { %>
-                        <p> no folders yet </p>
-                    <% } else { %>
-                        <% folders.forEach(function(folder) { %>
-                            <a href="#" class="folder-link"> <%= folder.name %> </a>
-                        <% }); %>
-                    <% } %>
+                    <a href="#" class="folder-link">Default Folder</a>
+                    <a href="#" class="folder-link">Default Folder</a>
                 </div>
                 <button class="btn-default"> <a href="/folder/create"> Add new folder </a> </button>
                 <a href="/log-out" class="shadow_text logOutBtn">Log out</a>
@@ -28,7 +23,7 @@
 
             <div class="right-panel">
 
-                <%- include('../folderLayout') %>
+                <%- include('../forms/newFolderForm') %>
             </div>
         </div>
     </div>

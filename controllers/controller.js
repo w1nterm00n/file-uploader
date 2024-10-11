@@ -15,6 +15,20 @@ exports.getSignUpPage = (req, res) => {
 	res.render("signUpPage");
 };
 
+exports.getMainPage = async (req, res, next) => {
+	try {
+		let lastFolder = await db.getLastFolder(req.user);
+		let allFolders = await db.getAllFolders(req.user);
+		res.render("mainPage", {
+			user: req.user,
+			folder: lastFolder,
+			folders: allFolders,
+		});
+	} catch (err) {
+		return next(err);
+	}
+};
+
 exports.createUser = async (req, res, next) => {
 	try {
 		const errors = validationResult(req);
@@ -30,6 +44,7 @@ exports.createUser = async (req, res, next) => {
 				}
 				try {
 					await db.createUser(req.body.nickname, hashedPassword);
+					await db.createDefaultFolder(req.body.nickname);
 					res.redirect("/logIn");
 				} catch (err) {
 					return next(err); // Обработка ошибок при сохранении в базе данных
