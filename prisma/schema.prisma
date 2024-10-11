@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id       Int      @id @default(autoincrement())
-  nickname String   @db.VarChar(255)
+  nickname String   @unique @db.VarChar(255)
   password String   @db.VarChar(255)
   folders  Folder[]
 }
