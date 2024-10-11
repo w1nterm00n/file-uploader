@@ -34,6 +34,22 @@ const signUpValidate = [
 		}),
 ];
 
+const logInValidate = [
+	body("nickname")
+		.exists({ checkFalsy: true })
+		.withMessage("nickname is required")
+		.isLength({ min: 5 })
+		.withMessage("nickname must be at least 5 characters long!"),
+
+	body("password")
+		.trim()
+		.exists({ checkFalsy: true })
+		.withMessage("Password is required")
+		.isLength({ min: 6 })
+		.withMessage("Password must be at least 6 characters long"),
+];
+
 module.exports = {
 	signUpValidate,
+	logInValidate,
 };

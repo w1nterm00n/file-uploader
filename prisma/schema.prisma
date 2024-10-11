@@ -31,3 +31,12 @@ model File {
   folder    Folder   @relation(fields: [folderId], references: [id])
   folderId  Int
 }
+
+model Session {
+  id        String   @id @default(cuid())
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
