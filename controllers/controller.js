@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const db = require("../db/queries");
+const bcrypt = require("bcryptjs");
 
 exports.getWelcomePage = (req, res) => {
 	res.render("welcomePage");
@@ -23,8 +24,19 @@ exports.createUser = async (req, res, next) => {
 			});
 		}
 		try {
-			await db.createUser(req.body.nickname, req.body.pwd);
-			res.redirect("/logIn");
+			bcrypt.hash(req.body.pwd, 10, async (err, hashedPassword) => {
+				if (err) {
+					return next(err);
+				}
+				try {
+					await db.createUser(req.body.nickname, hashedPassword);
+					res.redirect("/logIn");
+				} catch (err) {
+					return next(err); // Обработка ошибок при сохранении в базе данных
+				}
+			});
+			// await db.createUser(req.body.nickname, req.body.pwd);
+			// res.redirect("/logIn");
 		} catch (error) {
 			console.error("Error creating user: ", error);
 			res.status(500).send("Internal Server Error");

@@ -10,6 +10,7 @@ const passport = require("passport"); //
 const LocalStrategy = require("passport-local").Strategy; //
 const { PrismaClient } = require("@prisma/client"); //
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store"); //
+const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
@@ -49,10 +50,11 @@ passport.use(
 				where: { nickname: username },
 			});
 
+			const match = await bcrypt.compare(password, user.password);
 			if (!user) {
 				return done(null, false, { message: "Incorrect username" });
 			}
-			if (user.password !== password) {
+			if (!match) {
 				return done(null, false, { message: "Incorrect password" });
 			}
 			return done(null, user);
