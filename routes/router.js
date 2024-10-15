@@ -5,30 +5,22 @@ const { signUpValidate, logInValidate } = require("../validations/validation");
 const passport = require("passport"); //
 
 router.get("/", controller.getWelcomePage);
+
+//logIn & signUp & logOut
 router.get("/logIn", controller.getlogInPage);
-router.get("/signUp", controller.getSignUpPage);
-router.post("/user/create", signUpValidate, controller.createUser);
-// router.get("/main", (req, res) => {
-// 	res.render("mainPage", { user: req.user });
-// });
-router.get("/main", controller.getMainPage);
-
-router.get("/folder/create", (req, res) => {
-	res.render("folderFormPage", { user: req.user });
-});
-
 router.post(
-	"/user/auth",
+	"/logIn",
 	logInValidate,
 	passport.authenticate("local", {
 		failureRedirect: "/logIn",
 		failureFlash: true,
 	}),
 	(req, res) => {
-		res.redirect("/main");
+		res.redirect("/main/folders/last");
 	}
 );
-
+router.get("/signUp", controller.getSignUpPage);
+router.post("/signUp", signUpValidate, controller.createUser);
 router.get("/log-out", (req, res, next) => {
 	req.logout((err) => {
 		if (err) {
@@ -37,5 +29,9 @@ router.get("/log-out", (req, res, next) => {
 		res.redirect("/");
 	});
 });
+//logIn & signUp & logOut
+
+router.get("/main/folders/last", controller.getMainPage);
+router.get("/main/folders/create", controller.getFolderForm);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 <div class="folderLayout">
     <div class="folder_header">
-        <h3> <%= folder.name %> </h3>
+        <h3> <%= lastFolder.name %> </h3>
 
         <div class="add_and_delete">
             <button class="btn-default addFileBtn"> <a href="#"> Add new file </a> </button>
@@ -9,10 +9,10 @@
     </div>
 
     <div class="files-container">
-        <% if (!folder.files) { %>
+        <% if (!lastFolder.files) { %>
             <p> no files yet </p>
         <% } else { %>
-            <% folder.files.forEach(function(file) { %>
+            <% lastFolder.files.forEach(function(file) { %>
                 <%- include('fileLink', { name: file.name }) %>
             <% }); %>
         <% } %>

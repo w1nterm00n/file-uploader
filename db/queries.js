@@ -20,7 +20,6 @@ async function createDefaultFolder(nickname) {
 		data: {
 			name: "Default Folder",
 			authorId: user.id,
-			files: [],
 		},
 	});
 }
@@ -49,7 +48,6 @@ async function getAllFolders(user) {
 			id: "desc",
 		},
 	});
-	console.log(folders);
 	return folders;
 }
 

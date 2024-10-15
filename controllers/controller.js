@@ -15,20 +15,6 @@ exports.getSignUpPage = (req, res) => {
 	res.render("signUpPage");
 };
 
-exports.getMainPage = async (req, res, next) => {
-	try {
-		let lastFolder = await db.getLastFolder(req.user);
-		let allFolders = await db.getAllFolders(req.user);
-		res.render("mainPage", {
-			user: req.user,
-			folder: lastFolder,
-			folders: allFolders,
-		});
-	} catch (err) {
-		return next(err);
-	}
-};
-
 exports.createUser = async (req, res, next) => {
 	try {
 		const errors = validationResult(req);
@@ -58,5 +44,33 @@ exports.createUser = async (req, res, next) => {
 		}
 	} catch (err) {
 		next(err);
+	}
+};
+
+exports.getMainPage = async (req, res, next) => {
+	try {
+		let lastFolder = await db.getLastFolder(req.user);
+		let allFolders = await db.getAllFolders(req.user);
+		res.render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "lastFolder",
+			lastFolder: lastFolder,
+		});
+	} catch (err) {
+		return next(err);
+	}
+};
+
+exports.getFolderForm = async (req, res, next) => {
+	try {
+		let allFolders = await db.getAllFolders(req.user);
+		res.render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "newFolderForm",
+		});
+	} catch (err) {
+		return next(err);
 	}
 };

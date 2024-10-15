@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./../style.css">
+        <link rel="stylesheet" href="./../../style.css">
     </head>
 <body>
 
@@ -21,14 +21,17 @@
                         <% }); %>
                     <% } %>
                 </div>
-                <button class="btn-default"> <a href="/folder/create"> Add new folder </a> </button>
+                <button class="btn-default"> <a href="/main/folders/create"> Add new folder </a> </button>
                 <a href="/log-out" class="shadow_text logOutBtn">Log out</a>
             </div>
 
 
             <div class="right-panel">
-
-                <%- include('../folderLayout') %>
+                <% if (content === 'lastFolder' && typeof lastFolder !== 'undefined' && lastFolder) { %>
+                    <%- include('../folderLayout') %>
+                <% } else if (content === 'newFolderForm') { %>
+                    <%- include('../forms/newFolderForm') %>
+                <% } %>
             </div>
         </div>
     </div>
