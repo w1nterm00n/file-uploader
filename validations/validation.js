@@ -49,7 +49,16 @@ const logInValidate = [
 		.withMessage("Password must be at least 6 characters long"),
 ];
 
+const newFolderValidate = [
+	body("name")
+		.exists({ checkFalsy: true })
+		.withMessage("name is required")
+		.isLength({ min: 2, max: 25 })
+		.withMessage("name must be between 2 and 25 characters long!"),
+];
+
 module.exports = {
 	signUpValidate,
 	logInValidate,
+	newFolderValidate,
 };

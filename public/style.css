@@ -230,4 +230,11 @@ body {
 }
 .fileLayout .download_and_delete .downloadBtn {
   margin: 0;
+}
+
+.newFolderForm ul {
+  margin-bottom: 20px;
+}
+.newFolderForm button {
+  margin: 0 auto !important;
 }/*# sourceMappingURL=style.css.map */

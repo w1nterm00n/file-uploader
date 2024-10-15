@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const controller = require("../controllers/controller");
 const router = Router();
-const { signUpValidate, logInValidate } = require("../validations/validation");
+const {
+	signUpValidate,
+	logInValidate,
+	newFolderValidate,
+} = require("../validations/validation");
 const passport = require("passport"); //
 
 router.get("/", controller.getWelcomePage);
@@ -33,5 +37,10 @@ router.get("/log-out", (req, res, next) => {
 
 router.get("/main/folders/last", controller.getMainPage);
 router.get("/main/folders/create", controller.getFolderForm);
+router.post(
+	"/main/folders/create",
+	newFolderValidate,
+	controller.createNewFolder
+);
 
 module.exports = router;

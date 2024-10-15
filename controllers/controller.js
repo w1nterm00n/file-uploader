@@ -74,3 +74,21 @@ exports.getFolderForm = async (req, res, next) => {
 		return next(err);
 	}
 };
+
+exports.createNewFolder = async (req, res, next) => {
+	try {
+		let allFolders = await db.getAllFolders(req.user);
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.render("mainPage", {
+				user: req.user,
+				folders: allFolders,
+				content: "newFolderForm",
+				errors: errors.array(),
+			});
+		}
+		res.redirect("/main/folders/last");
+	} catch (err) {
+		next(err);
+	}
+};
