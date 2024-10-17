@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./../../style.css">
+        <link rel="stylesheet" href="/style.css">
     </head>
 <body>
 
@@ -17,20 +17,26 @@
                         <p> no folders yet </p>
                     <% } else { %>
                         <% folders.forEach(function(folder) { %>
-                            <a href="#" class="folder-link"> <%= folder.name %> </a>
+                            <a href="/folders/<%= folder.id %>" class="folder-link"> <%= folder.name %> </a>
                         <% }); %>
                     <% } %>
                 </div>
-                <button class="btn-default"> <a href="/main/folders/create"> Add new folder </a> </button>
+                <button class="btn-default"> <a href="/folders/create"> Add new folder </a> </button>
                 <a href="/log-out" class="shadow_text logOutBtn">Log out</a>
             </div>
 
 
             <div class="right-panel">
-                <% if (content === 'lastFolder' && typeof lastFolder !== 'undefined' && lastFolder) { %>
+                <% if (content === 'lastFolder' && typeof folder !== 'undefined' && folder) { %>
                     <%- include('../folderLayout') %>
                 <% } else if (content === 'newFolderForm') { %>
                     <%- include('../forms/newFolderForm') %>
+                <% } else if (content === 'folder') { %>
+                    <%- include('../folderLayout') %>
+                <% } else if (content === 'newFileForm') { %>
+                    <%- include('../forms/newFileForm') %>
+                <% } else if (content === 'error') { %>
+                    <h2>error</h2>
                 <% } %>
             </div>
         </div>

@@ -47,6 +47,7 @@ exports.createUser = async (req, res, next) => {
 	}
 };
 
+//main
 exports.getMainPage = async (req, res, next) => {
 	try {
 		let lastFolder = await db.getLastFolder(req.user);
@@ -55,7 +56,7 @@ exports.getMainPage = async (req, res, next) => {
 			user: req.user,
 			folders: allFolders,
 			content: "lastFolder",
-			lastFolder: lastFolder,
+			folder: lastFolder,
 		});
 	} catch (err) {
 		return next(err);
@@ -76,19 +77,70 @@ exports.getFolderForm = async (req, res, next) => {
 };
 
 exports.createNewFolder = async (req, res, next) => {
+	let allFolders = await db.getAllFolders(req.user);
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "newFolderForm",
+			errors: errors.array(),
+		});
+	}
+
+	try {
+		await db.createFolder(req.body.name, req);
+		res.redirect("/folders/last");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Server Error");
+	}
+};
+
+exports.getFolderById = async (id, req, res) => {
 	try {
 		let allFolders = await db.getAllFolders(req.user);
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			res.render("mainPage", {
+		let folder = await db.getFolder(id);
+
+		if (!folder) {
+			return res.status(404).render("mainPage", {
 				user: req.user,
 				folders: allFolders,
-				content: "newFolderForm",
-				errors: errors.array(),
+				content: "error",
+				errorMessage: "Folder not found",
 			});
 		}
-		res.redirect("/main/folders/last");
+
+		res.render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "folder",
+			folder: folder,
+		});
 	} catch (err) {
-		next(err);
+		console.error(err); // Логируем ошибку
+		res.status(500).render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "error",
+		});
 	}
+};
+
+exports.getFileForm = async (req, res, next) => {
+	try {
+		let allFolders = await db.getAllFolders(req.user);
+		res.render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "newFileForm",
+		});
+	} catch (err) {
+		return next(err);
+	}
+};
+
+exports.deleteFolderById = async (id, req, res) => {
+	await db.deleteFolder(id);
+	res.redirect("/folders/last");
 };

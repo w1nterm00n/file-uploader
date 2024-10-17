@@ -51,9 +51,43 @@ async function getAllFolders(user) {
 	return folders;
 }
 
+async function createFolder(name, req) {
+	const authorId = req.session.passport.user;
+	await prisma.folder.create({
+		data: {
+			name: name,
+			authorId: authorId,
+		},
+	});
+}
+
+async function getFolder(id) {
+	const folder = await prisma.folder.findUnique({
+		where: {
+			id: id,
+		},
+		include: {
+			files: true,
+		},
+	});
+	return folder;
+}
+
+async function deleteFolder(id) {
+	console.log("id: ", id);
+	await prisma.folder.delete({
+		where: {
+			id: id,
+		},
+	});
+}
+
 module.exports = {
 	createUser,
 	createDefaultFolder,
 	getLastFolder,
 	getAllFolders,
+	createFolder,
+	getFolder,
+	deleteFolder,
 };

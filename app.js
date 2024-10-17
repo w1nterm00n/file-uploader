@@ -1,5 +1,7 @@
 const express = require("express");
+const methodOverride = require("method-override");
 const app = express();
+app.use(methodOverride("_method"));
 const router = require("./routes/router");
 const path = require("path");
 const flash = require("connect-flash");

@@ -20,7 +20,7 @@ router.post(
 		failureFlash: true,
 	}),
 	(req, res) => {
-		res.redirect("/main/folders/last");
+		res.redirect("/folders/last");
 	}
 );
 router.get("/signUp", controller.getSignUpPage);
@@ -35,12 +35,17 @@ router.get("/log-out", (req, res, next) => {
 });
 //logIn & signUp & logOut
 
-router.get("/main/folders/last", controller.getMainPage);
-router.get("/main/folders/create", controller.getFolderForm);
-router.post(
-	"/main/folders/create",
-	newFolderValidate,
-	controller.createNewFolder
-);
+router.get("/folders/last", controller.getMainPage);
+router.get("/folders/create", controller.getFolderForm);
+router.post("/folders/create", newFolderValidate, controller.createNewFolder);
+router.get("/folders/:id", (req, res) => {
+	const id = parseInt(req.params.id, 10);
+	controller.getFolderById(id, req, res);
+});
+router.delete("/folders/:id", (req, res) => {
+	const id = parseInt(req.params.id, 10);
+	controller.deleteFolderById(id, req, res);
+});
+router.get("/folders/:id/files/create", controller.getFileForm);
 
 module.exports = router;

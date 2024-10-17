@@ -212,6 +212,13 @@ body{
             .addFileBtn{
                 margin-bottom: 0;
             }
+            form{
+                .delete-btn{
+                    background: 0;
+                    margin: 0;
+                    border: 0;
+                }
+            }
         }
     }
 }

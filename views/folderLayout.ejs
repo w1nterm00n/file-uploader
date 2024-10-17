@@ -1,18 +1,22 @@
 <div class="folderLayout">
     <div class="folder_header">
-        <h3> <%= lastFolder.name %> </h3>
+        <h3> <%= folder.name %> </h3>
 
         <div class="add_and_delete">
-            <button class="btn-default addFileBtn"> <a href="#"> Add new file </a> </button>
-            <a href="#"> <img src="/img/delete.svg" alt="rubbish"></a>
+            <button type="submit" class="btn-default addFileBtn"> <a href="/folders/<%= folder.id %>/files/create"> Add new file </a> </button>
+
+            <form action="/folders/<%= folder.id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn delete-btn change-btn"><a href="#"> <img src="/img/delete.svg" alt="rubbish"></a></button>
+            </form>
+            
         </div>
     </div>
 
     <div class="files-container">
-        <% if (!lastFolder.files) { %>
+        <% if (!folder.files) { %>
             <p> no files yet </p>
         <% } else { %>
-            <% lastFolder.files.forEach(function(file) { %>
+            <% folder.files.forEach(function(file) { %>
                 <%- include('fileLink', { name: file.name }) %>
             <% }); %>
         <% } %>
