@@ -5,8 +5,14 @@ const {
 	signUpValidate,
 	logInValidate,
 	newFolderValidate,
+	newFileValidate,
 } = require("../validations/validation");
-const passport = require("passport"); //
+const passport = require("passport");
+//multer
+const multer = require("multer");
+const storage = multer.memoryStorage(); // Используем память для хранения файлов
+const upload = multer({ storage: storage });
+//multer
 
 router.get("/", controller.getWelcomePage);
 
@@ -47,5 +53,11 @@ router.delete("/folders/:id", (req, res) => {
 	controller.deleteFolderById(id, req, res);
 });
 router.get("/folders/:id/files/create", controller.getFileForm);
+router.post(
+	"/folders/:id/files/create",
+	upload.single("uploadedFile"),
+	newFileValidate,
+	controller.postFileForm
+);
 
 module.exports = router;

@@ -1,6 +1,12 @@
 const { validationResult } = require("express-validator");
 const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
+const { createClient } = require("@supabase/supabase-js");
+
+const supabaseUrl = "https://ajiieetzcagbtqatazpu.supabase.co"; // URL проекта Supabase
+const supabaseKey =
+	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqaWllZXR6Y2FnYnRxYXRhenB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwMDY4NjYsImV4cCI6MjA0NDU4Mjg2Nn0.Q-1J4MFWAXfbiTjO2ENyqljVYTW7_Iu4DODOc2lf5-c"; // Публичный ключ API
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 exports.getWelcomePage = (req, res) => {
 	res.render("welcomePage");
@@ -130,10 +136,14 @@ exports.getFolderById = async (id, req, res) => {
 exports.getFileForm = async (req, res, next) => {
 	try {
 		let allFolders = await db.getAllFolders(req.user);
+		const id = parseInt(req.params.id, 10);
+		let folder = await db.getFolder(id);
+
 		res.render("mainPage", {
 			user: req.user,
 			folders: allFolders,
 			content: "newFileForm",
+			folder: folder,
 		});
 	} catch (err) {
 		return next(err);
@@ -144,3 +154,71 @@ exports.deleteFolderById = async (id, req, res) => {
 	await db.deleteFolder(id);
 	res.redirect("/folders/last");
 };
+
+exports.postFileForm = async (req, res, next) => {
+	let allFolders = await db.getAllFolders(req.user);
+	const errors = validationResult(req);
+
+	const uploadedFile = req.file;
+	const fileName = req.body.name;
+	console.log("Имя файла:", fileName);
+	console.log("Загруженный файл:", uploadedFile);
+
+	if (uploadedFile) {
+		const fileUrl = await uploadFile(fileName, uploadedFile);
+
+		if (fileUrl) {
+			//here will be code to add url to DB
+			console.log("File URL:", fileUrl);
+		}
+	}
+
+	//const folderId = req.params.id;
+
+	if (!errors.isEmpty()) {
+		const id = parseInt(req.params.id, 10);
+		let folder = await db.getFolder(id);
+		return res.status(400).render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "newFileForm",
+			errors: errors.array(),
+			folder: folder,
+		});
+	}
+	try {
+		res.redirect("/folders/last");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Server Error");
+	}
+};
+
+async function uploadFile(originalFileName, file) {
+	const timestamp = Date.now();
+	const fileName = `${timestamp}-${originalFileName}`;
+	const filePath = `${fileName}`;
+	const expirationTime = 60 * 60 * 24 * 7;
+
+	const { data, error } = await supabase.storage
+		.from("file-uploader")
+		.upload(filePath, file.buffer, {
+			contentType: "image/jpeg",
+		});
+
+	if (error) {
+		console.error("Error uploading file:", error.message);
+		return null;
+	}
+
+	const { data: signedUrlData, error: urlError } = await supabase.storage
+		.from("file-uploader")
+		.createSignedUrl(filePath, expirationTime);
+
+	if (urlError) {
+		console.error("Error creating signed URL:", urlError.message);
+		return null;
+	}
+
+	return signedUrlData.signedUrl;
+}

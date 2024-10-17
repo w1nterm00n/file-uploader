@@ -1,18 +1,19 @@
 <div class="newFile formWrapper">
 
-    <h2>/folderName - Upload File</h2>
-    <form action="" method="">
+    <h2>/<%= folder.name %> - Upload File</h2>
+    <form action="/folders/<%= folder.id %>/files/create" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name"> name of file </label>
             <input type="text" class="form-control" name="name">
         </div>
         <div class="form-group">
             <label for="uploadedFile"> file upload </label>
-            <input type="file" id="uploadField" name="uploadedFile">
+            <input type="file" id="uploadField" accept="image/*" name="uploadedFile">
         </div>
 
           <%- include("../partials/errors.ejs") %>
 
         <button type="submit" class="btn-default"> Upload </button>
+
     </form>
 </div>
