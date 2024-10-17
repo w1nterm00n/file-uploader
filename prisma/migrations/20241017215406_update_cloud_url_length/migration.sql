@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "File" ALTER COLUMN "cloud_url" SET DATA TYPE VARCHAR(1024);

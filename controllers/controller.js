@@ -158,22 +158,29 @@ exports.deleteFolderById = async (id, req, res) => {
 exports.postFileForm = async (req, res, next) => {
 	let allFolders = await db.getAllFolders(req.user);
 	const errors = validationResult(req);
-
 	const uploadedFile = req.file;
 	const fileName = req.body.name;
-	console.log("Имя файла:", fileName);
-	console.log("Загруженный файл:", uploadedFile);
+	const folderId = parseInt(req.params.id, 10);
 
 	if (uploadedFile) {
 		const fileUrl = await uploadFile(fileName, uploadedFile);
 
 		if (fileUrl) {
-			//here will be code to add url to DB
-			console.log("File URL:", fileUrl);
+			try {
+				await db.createFile(
+					fileName,
+					uploadedFile.originalname,
+					uploadedFile.mimetype,
+					uploadedFile.size,
+					fileUrl,
+					folderId
+				);
+			} catch (err) {
+				console.error(err);
+				res.status(500).send("Server Error");
+			}
 		}
 	}
-
-	//const folderId = req.params.id;
 
 	if (!errors.isEmpty()) {
 		const id = parseInt(req.params.id, 10);
@@ -187,7 +194,7 @@ exports.postFileForm = async (req, res, next) => {
 		});
 	}
 	try {
-		res.redirect("/folders/last");
+		res.redirect(`/folders/${folderId}`);
 	} catch (err) {
 		console.error(err);
 		res.status(500).send("Server Error");

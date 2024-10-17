@@ -82,6 +82,19 @@ async function deleteFolder(id) {
 	});
 }
 
+async function createFile(name, original_name, type, size, url, folderId) {
+	await prisma.file.create({
+		data: {
+			name: name,
+			original_name: original_name,
+			type: type,
+			size: size,
+			cloud_url: url,
+			folderId: folderId,
+		},
+	});
+}
+
 module.exports = {
 	createUser,
 	createDefaultFolder,
@@ -90,4 +103,5 @@ module.exports = {
 	createFolder,
 	getFolder,
 	deleteFolder,
+	createFile,
 };

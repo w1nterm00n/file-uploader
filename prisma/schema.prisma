@@ -23,13 +23,15 @@ model Folder {
 }
 
 model File {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  size      Int
-  cloud_url String   @db.VarChar(255)
-  createdAt DateTime @default(now())
-  folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
-  folderId  Int
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  original_name String   @db.VarChar(255)
+  type          String   @db.VarChar(255)
+  size          Int
+  cloud_url     String   @db.VarChar(1024)
+  createdAt     DateTime @default(now())
+  folder        Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId      Int
 }
 
 model Session {
