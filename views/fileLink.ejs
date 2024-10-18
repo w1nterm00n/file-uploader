@@ -1,4 +1,7 @@
 <div class="file-wrapper">
     <a href="/folders/<%=file.folderId %>/files/<%=file.id %>" class="file-name"> <%= file.name %> </a>
-    <button class="btn-default downloadBtn"> <a href="#"> Downolad </a> </button>
+
+    <form action="/download-file/<%= file.id %>">
+        <button class="btn-default downloadBtn" type="submit" >Download</button>
+    </form>
 </div>

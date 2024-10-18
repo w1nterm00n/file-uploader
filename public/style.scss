@@ -251,7 +251,7 @@ body{
         }
         .downloadBtn{
             margin: 0 !important;
-
+            text-shadow: 1px 1px 0 #0038FF, -1px -1px 0 #0038FF, 1px -1px 0 #0038FF, -1px 1px 0 #0038FF;
         }
     }
 }
@@ -281,6 +281,7 @@ body{
             margin: 0;
             background-color: #282828;
             border: 4px solid #0038FF;
+            text-shadow: 1px 1px 0 #0038FF, -1px -1px 0 #0038FF, 1px -1px 0 #0038FF, -1px 1px 0 #0038FF;
         }
         form{
             button{
