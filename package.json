@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "@prisma/client": "^5.20.0",
     "@quixo3/prisma-session-store": "^3.1.13",
     "@supabase/supabase-js": "^2.45.4",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "ejs": "^3.1.10",
@@ -25,6 +27,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "nodemon": "^3.1.7",
     "prisma": "^5.20.0"
   }
 }

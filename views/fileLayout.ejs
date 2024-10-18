@@ -12,7 +12,10 @@
 
 
     <div class="download_and_delete">
-        <button class="btn-default downloadBtn"> <a href="<%=file.cloud_url %>"> Download </a> </button>
+
+        <form action="/download-file/<%= file.id %>">
+            <button class="btn-default downloadBtn" type="submit" >Download</button>
+        </form>
 
         <form action="/folders/<%= folder.id %>/files/<%= file.id %>?_method=DELETE" method="POST">
             <button type="submit" class="btn delete-btn change-btn"><a href="#"> <img src="/img/delete.svg" alt="rubbish"></a></button>

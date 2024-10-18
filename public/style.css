@@ -235,6 +235,8 @@ body {
 }
 .fileLayout .download_and_delete .downloadBtn {
   margin: 0;
+  background-color: #282828;
+  border: 4px solid #0038FF;
 }
 .fileLayout .download_and_delete form button {
   margin-bottom: 0;

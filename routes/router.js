@@ -65,4 +65,6 @@ router.delete("/folders/:folderId/files/:fileId", (req, res) => {
 	controller.deleteFileById(req, res);
 });
 
+router.get("/download-file/:fileId", controller.downloadFile);
+
 module.exports = router;

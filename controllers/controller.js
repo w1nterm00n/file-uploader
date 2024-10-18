@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 const { createClient } = require("@supabase/supabase-js");
+const axios = require("axios");
 
 const supabaseUrl = "https://ajiieetzcagbtqatazpu.supabase.co"; // URL проекта Supabase
 const supabaseKey =
@@ -208,14 +209,6 @@ exports.getFileById = async (req, res) => {
 		let allFolders = await db.getAllFolders(req.user);
 		let file = await db.getFile(id);
 		let folder = await db.getFolder(file.folderId);
-		// if (!folder) {
-		// 	return res.status(404).render("mainPage", {
-		// 		user: req.user,
-		// 		folders: allFolders,
-		// 		content: "error",
-		// 		errorMessage: "Folder not found",
-		// 	});
-		// }
 		res.render("mainPage", {
 			user: req.user,
 			folders: allFolders,
@@ -224,7 +217,7 @@ exports.getFileById = async (req, res) => {
 			folder: folder,
 		});
 	} catch (err) {
-		console.error(err); // Логируем ошибку
+		console.error(err);
 		res.status(500).render("mainPage", {
 			user: req.user,
 			folders: allFolders,
@@ -241,6 +234,33 @@ exports.deleteFileById = async (req, res) => {
 	res.redirect(`/folders/${folderId}`);
 };
 
+exports.downloadFile = async (req, res) => {
+	const fileId = parseInt(req.params.fileId, 10);
+	let file = await db.getFile(fileId);
+
+	try {
+		const url = file.cloud_url;
+
+		// Получаем файл с помощью axios
+		const response = await axios({
+			url: url,
+			method: "GET",
+			responseType: "stream", // Чтобы передать файл как поток
+		});
+
+		res.setHeader(
+			"Content-Disposition",
+			`attachment; filename=${file.original_name}`
+		);
+
+		// Передаём поток данных клиенту
+		response.data.pipe(res);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error when uploading file");
+	}
+};
+
 async function uploadFile(originalFileName, file) {
 	const timestamp = Date.now();
 	const fileName = `${timestamp}-${originalFileName}`;
@@ -250,7 +270,7 @@ async function uploadFile(originalFileName, file) {
 	const { data, error } = await supabase.storage
 		.from("file-uploader")
 		.upload(filePath, file.buffer, {
-			contentType: "image/jpeg",
+			//contentType: "image/jpeg",
 		});
 
 	if (error) {
