@@ -1,16 +1,21 @@
 <div class="fileLayout">
 
-        <h3>Cats Folder / Cat File 1</h3>
+        <h3><%=folder.name %> / <%=file.name %></h3>
 
         <div class="file-info">
-            <p> name: Cat File 1</p>
-            <p> size: Cat File 1</p>
-            <p> creation time: 13/10/2024</p>
+            <p> name: <%=file.name %></p>
+            <p> size: <%=file.size %> bytes</p>
+            <p> type: <%=file.type %></p>
+            <p> creation time: <%=file.createdAt %></p>
+            <p> original name: <%=file.original_name %></p>
         </div>
 
 
     <div class="download_and_delete">
-        <button class="btn-default downloadBtn"> <a href="#"> Download </a> </button>
-        <a href="#"> <img src="/img/delete.svg" alt="rubbish"></a>
+        <button class="btn-default downloadBtn"> <a href="<%=file.cloud_url %>"> Download </a> </button>
+
+        <form action="/folders/<%= folder.id %>/files/<%= file.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn delete-btn change-btn"><a href="#"> <img src="/img/delete.svg" alt="rubbish"></a></button>
+        </form>
     </div>
 </div>

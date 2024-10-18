@@ -17,7 +17,7 @@
             <p> no files yet </p>
         <% } else { %>
             <% folder.files.forEach(function(file) { %>
-                <%- include('fileLink', { name: file.name }) %>
+                <%- include('fileLink', { file }) %>
             <% }); %>
         <% } %>
     </div>

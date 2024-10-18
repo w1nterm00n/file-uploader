@@ -280,6 +280,13 @@ body{
         .downloadBtn{
             margin: 0;
         }
+        form{
+            button{
+                margin-bottom: 0;
+                background: 0;
+                border: 0;
+            }
+        }
     }
 }
 //file layout

@@ -201,6 +201,46 @@ exports.postFileForm = async (req, res, next) => {
 	}
 };
 
+exports.getFileById = async (req, res) => {
+	const id = parseInt(req.params.id, 10);
+	console.log("id of file: ", id);
+	try {
+		let allFolders = await db.getAllFolders(req.user);
+		let file = await db.getFile(id);
+		let folder = await db.getFolder(file.folderId);
+		// if (!folder) {
+		// 	return res.status(404).render("mainPage", {
+		// 		user: req.user,
+		// 		folders: allFolders,
+		// 		content: "error",
+		// 		errorMessage: "Folder not found",
+		// 	});
+		// }
+		res.render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "file",
+			file: file,
+			folder: folder,
+		});
+	} catch (err) {
+		console.error(err); // Логируем ошибку
+		res.status(500).render("mainPage", {
+			user: req.user,
+			folders: allFolders,
+			content: "error",
+		});
+	}
+};
+
+exports.deleteFileById = async (req, res) => {
+	const folderId = parseInt(req.params.folderId, 10);
+	const fileId = parseInt(req.params.fileId, 10);
+
+	await db.deleteFile(fileId);
+	res.redirect(`/folders/${folderId}`);
+};
+
 async function uploadFile(originalFileName, file) {
 	const timestamp = Date.now();
 	const fileName = `${timestamp}-${originalFileName}`;

@@ -236,6 +236,11 @@ body {
 .fileLayout .download_and_delete .downloadBtn {
   margin: 0;
 }
+.fileLayout .download_and_delete form button {
+  margin-bottom: 0;
+  background: 0;
+  border: 0;
+}
 
 .newFolderForm ul {
   margin-bottom: 20px;

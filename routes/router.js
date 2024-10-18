@@ -59,5 +59,10 @@ router.post(
 	newFileValidate,
 	controller.postFileForm
 );
+router.get("/folders/:id/files/:id", controller.getFileById);
+
+router.delete("/folders/:folderId/files/:fileId", (req, res) => {
+	controller.deleteFileById(req, res);
+});
 
 module.exports = router;

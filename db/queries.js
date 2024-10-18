@@ -74,8 +74,15 @@ async function getFolder(id) {
 }
 
 async function deleteFolder(id) {
-	console.log("id: ", id);
 	await prisma.folder.delete({
+		where: {
+			id: id,
+		},
+	});
+}
+
+async function deleteFile(id) {
+	await prisma.file.delete({
 		where: {
 			id: id,
 		},
@@ -95,6 +102,15 @@ async function createFile(name, original_name, type, size, url, folderId) {
 	});
 }
 
+async function getFile(id) {
+	const file = await prisma.file.findUnique({
+		where: {
+			id: id,
+		},
+	});
+	return file;
+}
+
 module.exports = {
 	createUser,
 	createDefaultFolder,
@@ -104,4 +120,6 @@ module.exports = {
 	getFolder,
 	deleteFolder,
 	createFile,
+	getFile,
+	deleteFile,
 };
