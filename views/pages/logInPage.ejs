@@ -9,7 +9,7 @@
         <%- include('../forms/logIn') %>
 
         <% if (messages.length > 0) { %>
-            <ul>
+            <ul class="errors">
                 <% messages.forEach(function(message) { %>
                     <li><%= message %></li>
                 <% }); %>

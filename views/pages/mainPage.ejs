@@ -17,7 +17,7 @@
                         <p> no folders yet </p>
                     <% } else { %>
                         <% folders.forEach(function(folder) { %>
-                            <a href="/folders/<%= folder.id %>" class="folder-link"> <%= folder.name %> </a>
+                            <a href="/folders/<%= folder.id %>" class="folder-link"> <p><%= folder.name %></p> </a>
                         <% }); %>
                     <% } %>
                 </div>

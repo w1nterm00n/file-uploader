@@ -8,10 +8,20 @@ body {
   background-color: #383838;
   font-family: Arial, Helvetica, sans-serif;
   color: #FFF;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .shadow_text {
   text-shadow: 1px 1px 0 #0038FF, -1px -1px 0 #0038FF, 1px -1px 0 #0038FF, -1px 1px 0 #0038FF;
+}
+
+.errors {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-default {
@@ -137,6 +147,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin-bottom: 50px;
+  padding: 0 10px;
 }
 .mainPage .main-container .folder-link {
   font-size: 20px;
@@ -251,4 +262,176 @@ body {
 }
 .newFolderForm button {
   margin: 0 auto !important;
+}
+
+@media (max-width: 1300px) {
+  .left-panel p {
+    overflow-wrap: break-word;
+  }
+  .left-panel .btn-default {
+    margin: 0 10px 50px 10px !important;
+  }
+}
+@media (max-width: 1000px) {
+  .left-panel .folders-array a p {
+    font-size: 16px;
+  }
+  .left-panel .btn-default {
+    padding: 15px 10px;
+  }
+}
+@media (max-width: 800px) {
+  .left-panel {
+    width: 25% !important;
+  }
+  .right-panel {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .right-panel .newFolder h2, .right-panel .newFile h2 {
+    font-size: 20px;
+  }
+  .right-panel .newFolder form, .right-panel .newFile form {
+    padding: 30px;
+  }
+  .right-panel .newFolder form .form-group, .right-panel .newFile form .form-group {
+    gap: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .main-container {
+    flex-direction: column !important;
+  }
+  .main-container .left-panel {
+    width: 100% !important;
+    height: -moz-fit-content !important;
+    height: fit-content !important;
+    border-right: 0 !important;
+  }
+  .main-container .left-panel .welcome-block {
+    padding: 20px;
+    margin-bottom: 10px !important;
+  }
+  .main-container .left-panel .foldersAmount {
+    margin-bottom: 10px !important;
+  }
+  .main-container .left-panel .folders-array {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+  }
+  .main-container .left-panel .btn-default {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 0 auto 10px !important;
+  }
+  .main-container .left-panel .logOutBtn {
+    padding-bottom: 10px;
+    border-bottom: 3px solid #0038FF;
+  }
+  .main-container .right-panel {
+    width: 100% !important;
+  }
+  .main-container .right-panel .folderLayout .folder_header {
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .main-container .right-panel .folderLayout .folder_header h3 {
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  .main-container .right-panel .folderLayout .folder_header .add_and_delete .addFileBtn {
+    padding: 15px 10px !important;
+  }
+  .main-container .right-panel .folderLayout .files-container {
+    margin-bottom: 30px;
+    gap: 20px;
+  }
+  .main-container .right-panel .folderLayout .files-container .file-wrapper {
+    width: 65vw;
+  }
+  .main-container .right-panel .folderLayout .files-container .file-wrapper a {
+    font-size: 16px;
+  }
+  .main-container .right-panel .folderLayout .files-container .file-wrapper form button {
+    padding: 15px 10px !important;
+  }
+  .main-container .right-panel .fileLayout {
+    padding: 0 20px;
+  }
+  .main-container .right-panel .fileLayout h3 {
+    font-size: 18px;
+    margin-bottom: 20px !important;
+  }
+  .main-container .right-panel .fileLayout .file-info {
+    gap: 10px;
+  }
+  .main-container .right-panel .fileLayout .download_and_delete {
+    gap: 20px;
+  }
+}
+@media (max-width: 550px) {
+  .SignUp h2, .logIn h2 {
+    font-size: 24px;
+  }
+  .SignUp form, .logIn form {
+    padding: 30px;
+  }
+  .SignUp form .form-group, .logIn form .form-group {
+    gap: 10px;
+  }
+  .welcomePage .text-container {
+    max-width: 80vw;
+  }
+  .welcomePage .text-container h1 {
+    font-size: 1.5em;
+  }
+  .newFolder h2, .newFile h2 {
+    margin-bottom: 20px !important;
+  }
+  .newFolder form, .newFile form {
+    padding: 30px 20px !important;
+  }
+  .newFolder form .form-group label, .newFile form .form-group label {
+    font-size: 14px;
+  }
+  .newFolder form .form-group input, .newFile form .form-group input {
+    min-width: 100px !important;
+    max-width: 100px !important;
+  }
+}
+@media (max-width: 450px) {
+  .SignUp form, .logIn form {
+    padding: 30px 10px;
+  }
+  .SignUp form .form-group, .logIn form .form-group {
+    gap: 10px;
+  }
+  .SignUp form .form-group label, .logIn form .form-group label {
+    font-size: 14px;
+  }
+  .SignUp form .form-group .form-control, .logIn form .form-group .form-control {
+    min-width: 80px;
+    max-width: 100px;
+  }
+}
+@media (max-width: 400px) {
+  .SignUp form, .logIn form {
+    padding: 30px 10px;
+  }
+  .SignUp form .form-group, .logIn form .form-group {
+    gap: 10px;
+  }
+  .SignUp form .form-group label, .logIn form .form-group label {
+    font-size: 14px;
+  }
+  .welcomePage .text-container {
+    max-width: 90vw;
+  }
+  .welcomePage .btn-container .btn-default {
+    padding: 15px 10px;
+  }
 }/*# sourceMappingURL=style.css.map */
