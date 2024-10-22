@@ -17,6 +17,8 @@ const upload = multer({ storage: storage });
 router.get("/", controller.getWelcomePage);
 
 //logIn & signUp & logOut
+router.get("/signUp", controller.getSignUpPage);
+router.post("/signUp", signUpValidate, controller.createUser);
 router.get("/logIn", controller.getlogInPage);
 router.post(
 	"/logIn",
@@ -29,8 +31,6 @@ router.post(
 		res.redirect("/folders/last");
 	}
 );
-router.get("/signUp", controller.getSignUpPage);
-router.post("/signUp", signUpValidate, controller.createUser);
 router.get("/log-out", (req, res, next) => {
 	req.logout((err) => {
 		if (err) {

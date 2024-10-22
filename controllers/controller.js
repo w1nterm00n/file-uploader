@@ -36,6 +36,15 @@ exports.createUser = async (req, res, next) => {
 					return next(err);
 				}
 				try {
+					let users = await db.getAllUsers();
+					const userExists = users.find(
+						(u) => u.nickname === req.body.nickname
+					);
+					if (userExists) {
+						return res
+							.status(400)
+							.json({ error: "This nickname already exists" });
+					}
 					await db.createUser(req.body.nickname, hashedPassword);
 					await db.createDefaultFolder(req.body.nickname);
 					res.redirect("/logIn");
@@ -43,8 +52,6 @@ exports.createUser = async (req, res, next) => {
 					return next(err); // Обработка ошибок при сохранении в базе данных
 				}
 			});
-			// await db.createUser(req.body.nickname, req.body.pwd);
-			// res.redirect("/logIn");
 		} catch (error) {
 			console.error("Error creating user: ", error);
 			res.status(500).send("Internal Server Error");

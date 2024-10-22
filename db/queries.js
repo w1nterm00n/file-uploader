@@ -10,6 +10,15 @@ async function createUser(nickname, password) {
 	});
 }
 
+async function getAllUsers() {
+	const users = await prisma.user.findMany({
+		orderBy: {
+			id: "desc",
+		},
+	});
+	return users;
+}
+
 async function createDefaultFolder(nickname) {
 	const user = await prisma.user.findUnique({
 		where: {
@@ -113,6 +122,7 @@ async function getFile(id) {
 
 module.exports = {
 	createUser,
+	getAllUsers,
 	createDefaultFolder,
 	getLastFolder,
 	getAllFolders,
